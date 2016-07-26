@@ -1,0 +1,101 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/helpers/helpers.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="pages/home-view.html">
+
+<dom-module id="dpm-construction-app">
+
+    <template>
+        <style>
+          app-header: {
+            background-color: black;
+          }
+        </style>
+
+        <app-location route="{{route}}"></app-location>
+        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+        <iron-media-query query="min-width: 641px" query-matches="{{showTabs}}"></iron-media-query>
+
+        <app-drawer-layout fullbleed>
+
+            <!-- Drawer content -->
+            <app-drawer id="appMenuDrawer" hidden$="[[showTabs]]">
+                <app-toolbar>Menu</app-toolbar>
+                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation" on-tap="_closeDrawer">
+                    <a name="home" href="/home">Home</a>
+                </iron-selector>
+            </app-drawer>
+
+            <!-- Main content -->
+            <app-header-layout has-scrolling-region>
+
+                <app-header fixed effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                        <a href="/">DPM Constructon</a>
+                    </app-toolbar>
+                </app-header>
+
+                <main role="main">
+                    <iron-pages selected="[[page]]" attr-for-selected="name">
+                        <home-view name="home"></home-view>
+                    </iron-pages>
+                </main>
+            </app-header-layout>
+        </app-drawer-layout>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'dpm-construction-app',
+            properties: {
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged'
+                },
+            },
+            observers: [
+                '_routePageChanged(routeData.page)'
+            ],
+            created: function() {
+                window.performance && performance.mark && performance.mark('dpm-construction-app.created');
+                this.removeAttribute('unresolved');
+            },
+            _routePageChanged: function(page) {
+                this.page = page || 'home';
+                Polymer.AppLayout.scroll({
+                    top: 0,
+                    behavior: 'silent'
+                });
+            },
+            _pageChanged: function(page) {
+                if (page === 'home') {
+                    return;
+                }
+                this.importHref(this.resolveUrl('pages/' + page + '-view.html'), null, null, true);
+            },
+            _closeDrawer: function() {
+                var appMenuDrawer = this.$.appMenuDrawer;
+                if (appMenuDrawer) {
+                    appMenuDrawer.close();
+                }
+            }
+        });
+    </script>
+</dom-module>

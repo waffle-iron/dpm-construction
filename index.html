@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <title>DPM Construction</title>
+
+    <link rel="shortcut icon" sizes="32x32" href="/images/app-icon-32.png">
+
+    <meta name="theme-color" content="#fff">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="import" href="/src/dpm-construction-app.html" async>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', 'Noto', sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <dpm-construction-app unresolved>
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+
+            body {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+            }
+
+            dpm-construction-app[unresolved] {
+                display: block;
+                min-height: 101vh;
+                line-height: 68px;
+                text-align: center;
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: 0.3em;
+                color: #212121;
+                padding: 0 16px;
+                overflow: visible;
+            }
+
+            .centered {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+            .spinner {
+                -webkit-animation: rotator 1.4s linear infinite;
+                animation: rotator 1.4s linear infinite;
+            }
+
+            @-webkit-keyframes rotator {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(270deg);
+                    transform: rotate(270deg);
+                }
+            }
+
+            @keyframes rotator {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(270deg);
+                    transform: rotate(270deg);
+                }
+            }
+
+            .path {
+                stroke-dasharray: 187;
+                stroke-dashoffset: 0;
+                -webkit-transform-origin: center;
+                transform-origin: center;
+                -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+                animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+            }
+
+            @-webkit-keyframes colors {
+                0% {
+                    stroke: #4285F4;
+                }
+                25% {
+                    stroke: #DE3E35;
+                }
+                50% {
+                    stroke: #F7C223;
+                }
+                75% {
+                    stroke: #1B9A59;
+                }
+                100% {
+                    stroke: #4285F4;
+                }
+            }
+
+            @keyframes colors {
+                0% {
+                    stroke: #4285F4;
+                }
+                25% {
+                    stroke: #DE3E35;
+                }
+                50% {
+                    stroke: #F7C223;
+                }
+                75% {
+                    stroke: #1B9A59;
+                }
+                100% {
+                    stroke: #4285F4;
+                }
+            }
+
+            @-webkit-keyframes dash {
+                0% {
+                    stroke-dashoffset: 187;
+                }
+                50% {
+                    stroke-dashoffset: 46.75;
+                    -webkit-transform: rotate(135deg);
+                    transform: rotate(135deg);
+                }
+                100% {
+                    stroke-dashoffset: 187;
+                    -webkit-transform: rotate(450deg);
+                    transform: rotate(450deg);
+                }
+            }
+
+            @keyframes dash {
+                0% {
+                    stroke-dashoffset: 187;
+                }
+                50% {
+                    stroke-dashoffset: 46.75;
+                    -webkit-transform: rotate(135deg);
+                    transform: rotate(135deg);
+                }
+                100% {
+                    stroke-dashoffset: 187;
+                    -webkit-transform: rotate(450deg);
+                    transform: rotate(450deg);
+                }
+            }
+        </style>
+        <svg class="spinner centered" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>
+    </dpm-construction-app>
+
+    <script>
+        window.performance && performance.mark && performance.mark('index.html');
+        // setup Polymer options
+        window.Polymer = {
+            lazyRegister: true,
+            dom: 'shadow'
+        };
+
+        // load webcomponents polyfills
+        (function() {
+            if ('registerElement' in document &&
+                'import' in document.createElement('link') &&
+                'content' in document.createElement('template')) {
+                // browser has web components
+            } else {
+                // polyfill web components
+                var e = document.createElement('script');
+                e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                document.head.appendChild(e);
+            }
+        })();
+
+        // load pre-caching service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
+</body>
+
+</html>
