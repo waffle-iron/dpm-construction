@@ -1,7 +1,7 @@
 {
-  "name": "app-drawer-template",
+  "name": "dpm-construction",
   "authors": [
-    "The Polymer Authors"
+    "David Clutter <cluttered.code@gmail.com>"
   ],
   "private": true,
   "dependencies": {
