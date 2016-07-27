@@ -11,6 +11,10 @@
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
@@ -36,6 +40,10 @@
                 text-decoration: none;
             }
 
+            paper-menu a {
+              text-decoration: none;
+            }
+
             main {
                 padding: 0px 20px;
             }
@@ -50,7 +58,11 @@
 
             <!-- Drawer content -->
             <app-drawer id="appMenuDrawer" hidden$="[[showTabs]]">
-                <app-toolbar>Menu</app-toolbar>
+                <app-toolbar>
+                  Menu
+                  <span class="flex-fill"></span>
+                  <paper-icon-button icon="close" on-tap="_closeDrawer"></paper-icon-button>
+                </app-toolbar>
                 <paper-menu selected="[[page]]" attr-for-selected="name" role="navigation" on-tap="_closeDrawer">
                     <template is="dom-repeat" items="[[_menuItems]]">
                         <a name="[[item.name]]" href="/[[item.name]]">
