@@ -5,6 +5,8 @@
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
@@ -62,6 +64,12 @@
         <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
         <iron-media-query query="min-width: 641px" query-matches="{{showTabs}}"></iron-media-query>
+
+        <firebase-app auth-domain="dpm-construction.firebaseapp.com"
+            database-url="https://dpm-construction.firebaseio.com"
+            api-key="AIzaSyBub_zhHGeThLY1FK5hPVaXITUpsesHOn4"
+            storage-bucket="dpm-construction.appspot.com">
+        </firebase-app>
 
         <app-drawer-layout fullbleed>
 
