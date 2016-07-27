@@ -51,10 +51,16 @@
             <!-- Drawer content -->
             <app-drawer id="appMenuDrawer" hidden$="[[showTabs]]">
                 <app-toolbar>Menu</app-toolbar>
-                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation" on-tap="_closeDrawer">
-                    <a name="home" href="/home">Home</a>
-                </iron-selector>
+                <paper-menu selected="[[page]]" attr-for-selected="name" role="navigation" on-tap="_closeDrawer">
+                    <template is="dom-repeat" items="[[_menuItems]]">
+                        <a name="[[item.name]]" href="/[[item.name]]">
+                            <paper-item>[[item.display]]</paper-item>
+                        </a>
+                    </template>
+                </paper-menu>
             </app-drawer>
+
+
 
             <!-- Main content -->
             <app-header-layout has-scrolling-region>
@@ -71,6 +77,9 @@
                 <main role="main">
                     <iron-pages selected="[[page]]" attr-for-selected="name">
                         <home-view name="home"></home-view>
+                        <projects-view name="projects"></projects-view>
+                        <services-view name="services"></services-view>
+                        <contact-us-view name="contact-us"></contact-us-view>
                     </iron-pages>
                 </main>
             </app-header-layout>
@@ -86,6 +95,21 @@
                     reflectToAttribute: true,
                     observer: '_pageChanged'
                 },
+                _menuItems: {
+                    type: Array,
+                    value: function() {
+                        return [{
+                            name: 'projects',
+                            display: 'Projects'
+                        }, {
+                            name: 'services',
+                            display: 'Services'
+                        }, {
+                            name: 'contact-us',
+                            display: 'Contact Us'
+                        }]
+                    }
+                }
             },
             observers: [
                 '_routePageChanged(routeData.page)'
