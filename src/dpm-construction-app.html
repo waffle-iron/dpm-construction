@@ -22,23 +22,23 @@
 
     <template>
         <style include="dpm-theme">
-          :host {
-            --main-paddding: 20px;
-          }
+            app-toolbar {
+                color: var(--dark-theme-text-color);
+                background-color: var(--primary-color);
+            }
 
-          app-toolbar {
-              color: var(--dark-theme-text-color);
-              background-color: var(--primary-color);
-          }
+            app-toolbar a,
+            app-toolbar a:hover,
+            app-toolbar a:active,
+            app-toolbar a:visited,
+            app-toolbar a:focus {
+                color: var(--dark-theme-text-color);
+                text-decoration: none;
+            }
 
-          app-toolbar a,
-          app-toolbar a:hover,
-          app-toolbar a:active,
-          app-toolbar a:visited,
-          app-toolbar a:focus {
-              color: var(--dark-theme-text-color);
-              text-decoration: none;
-          }
+            main {
+                padding: 0px 20px;
+            }
         </style>
 
         <app-location route="{{route}}"></app-location>
