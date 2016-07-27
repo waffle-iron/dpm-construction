@@ -43,19 +43,6 @@
                 text-decoration: none;
             }
 
-            paper-menu a,
-            paper-menu a:hover,
-            paper-menu a:active,
-            paper-menu a:visited,
-            paper-menu a:focus {
-                color: var(--primary-color);
-                text-decoration: none;
-            }
-
-            paper-menu a.iron-selected paper-item {
-              @apply(--paper-menu-selected-item);
-            }
-
             paper-tab {
                 margin: 0 10px;
             }
@@ -102,7 +89,7 @@
                     <app-toolbar>
                         <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
                         <div main-title>
-                            <a href="/">DPM Constructon</a>
+                            <a href="/">DPM Construction</a>
                         </div>
                         <template is="dom-if" if="{{showTabs}}">
                             <paper-tabs role="navigation" selected="[[page]]" attr-for-selected="name">
