@@ -43,8 +43,17 @@
                 text-decoration: none;
             }
 
-            paper-menu a {
+            paper-menu a,
+            paper-menu a:hover,
+            paper-menu a:active,
+            paper-menu a:visited,
+            paper-menu a:focus {
+                color: var(--primary-color);
                 text-decoration: none;
+            }
+
+            paper-menu a.iron-selected paper-item {
+              @apply(--paper-menu-selected-item);
             }
 
             paper-tab {
