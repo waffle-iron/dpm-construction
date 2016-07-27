@@ -64,7 +64,7 @@
                   <paper-icon-button icon="close" on-tap="_closeDrawer"></paper-icon-button>
                 </app-toolbar>
                 <paper-menu selected="[[page]]" attr-for-selected="name" role="navigation" on-tap="_closeDrawer">
-                    <template is="dom-repeat" items="[[_menuItems]]">
+                    <template is="dom-repeat" items="[[_navItems]]">
                         <a name="[[item.name]]" href="/[[item.name]]">
                             <paper-item>[[item.display]]</paper-item>
                         </a>
@@ -107,7 +107,7 @@
                     reflectToAttribute: true,
                     observer: '_pageChanged'
                 },
-                _menuItems: {
+                _navItems: {
                     type: Array,
                     value: function() {
                         return [{
