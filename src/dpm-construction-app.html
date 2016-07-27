@@ -22,7 +22,8 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
 <link rel="import" href="pages/home-view.html">
-<link rel="import" href="dpm-theme.html">f
+<link rel="import" href="pages/not-found-view.html">
+<link rel="import" href="dpm-theme.html">
 
 <dom-module id="dpm-construction-app">
 
@@ -107,8 +108,9 @@
                 </app-header>
 
                 <main role="main">
-                    <iron-pages selected="[[page]]" attr-for-selected="name">
+                    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404">
                         <home-view name="home"></home-view>
+                        <not-found-view name="404"></not-found-view>
                         <projects-view name="projects"></projects-view>
                         <services-view name="services"></services-view>
                         <contact-us-view name="contact-us"></contact-us-view>

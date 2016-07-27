@@ -1,10 +1,11 @@
 {
-  "entrypoint": "index.html",
-  "shell": "src/dpm-construction-app.html",
-  "fragments": [
-    "src/pages/home-view.html",
-    "src/pages/projects-view.html",
-    "src/pages/services-view.html",
-    "src/pages/contact-us-view.html"
-  ]
+    "entrypoint": "index.html",
+    "shell": "src/dpm-construction-app.html",
+    "fragments": [
+        "src/pages/home-view.html",
+        "src/pages/not-found-view.html",
+        "src/pages/projects-view.html",
+        "src/pages/services-view.html",
+        "src/pages/contact-us-view.html"
+    ]
 }
