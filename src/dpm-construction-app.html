@@ -14,6 +14,8 @@
 
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
@@ -41,7 +43,16 @@
             }
 
             paper-menu a {
-              text-decoration: none;
+                text-decoration: none;
+            }
+
+            paper-tab {
+                margin: 0 10px;
+            }
+
+            .link {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-center);
             }
 
             main {
@@ -59,11 +70,11 @@
             <!-- Drawer content -->
             <app-drawer id="appMenuDrawer" hidden$="[[showTabs]]">
                 <app-toolbar>
-                  Menu
-                  <span class="flex-fill"></span>
-                  <paper-icon-button icon="close" on-tap="_closeDrawer"></paper-icon-button>
+                    Menu
+                    <span class="flex-fill"></span>
+                    <paper-icon-button icon="close" on-tap="_closeDrawer"></paper-icon-button>
                 </app-toolbar>
-                <paper-menu selected="[[page]]" attr-for-selected="name" role="navigation" on-tap="_closeDrawer">
+                <paper-menu role="navigation" selected="[[page]]" attr-for-selected="name" on-tap="_closeDrawer">
                     <template is="dom-repeat" items="[[_navItems]]">
                         <a name="[[item.name]]" href="/[[item.name]]">
                             <paper-item>[[item.display]]</paper-item>
@@ -83,6 +94,15 @@
                         <div main-title>
                             <a href="/">DPM Constructon</a>
                         </div>
+                        <template is="dom-if" if="{{showTabs}}">
+                            <paper-tabs role="navigation" selected="[[page]]" attr-for-selected="name">
+                                <template is="dom-repeat" items="[[_navItems]]">
+                                    <paper-tab name="[[item.name]]" link>
+                                        <a href="/[[item.name]]" class="link" tabindex="-1">[[item.display]]</a>
+                                    </paper-tab>
+                                </template>
+                            </paper-tabs>
+                        </template>
                     </app-toolbar>
                 </app-header>
 
