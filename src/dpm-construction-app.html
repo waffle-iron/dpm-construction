@@ -31,7 +31,7 @@
         <style include="dpm-theme">
             app-toolbar {
                 color: var(--dark-theme-text-color);
-                background-color: var(--primary-color);
+                background-color: var(--dark-primary-color);
             }
 
             app-toolbar a,
@@ -41,6 +41,7 @@
             app-toolbar a:focus {
                 color: var(--dark-theme-text-color);
                 text-decoration: none;
+                outline: none;
             }
 
             paper-tab {
@@ -71,6 +72,8 @@
                     <span class="flex-fill"></span>
                     <paper-icon-button icon="close" on-tap="_closeDrawer"></paper-icon-button>
                 </app-toolbar>
+
+                <!-- Menu Navigation -->
                 <paper-menu role="navigation" selected="[[page]]" attr-for-selected="name" on-tap="_closeDrawer">
                     <template is="dom-repeat" items="[[_navItems]]">
                         <a name="[[item.name]]" href="/[[item.name]]">
@@ -89,7 +92,11 @@
                         <div main-title>
                             <a href="/">DPM Construction</a>
                         </div>
-                        <template is="dom-if" if="{{showTabs}}">
+                    </app-toolbar>
+
+                    <!-- Tab Navigation -->
+                    <template is="dom-if" if="{{showTabs}}">
+                        <app-toolbar>
                             <paper-tabs role="navigation" selected="[[page]]" attr-for-selected="name">
                                 <template is="dom-repeat" items="[[_navItems]]">
                                     <paper-tab name="[[item.name]]" link>
@@ -97,8 +104,8 @@
                                     </paper-tab>
                                 </template>
                             </paper-tabs>
-                        </template>
-                    </app-toolbar>
+                        </app-toolbar>
+                    </template>
                 </app-header>
 
                 <main role="main">
