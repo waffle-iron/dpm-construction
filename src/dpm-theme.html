@@ -35,10 +35,6 @@
             min-height: 100vh;
         }
 
-        .flex-fill {
-            flex: 1;
-        }
-
         paper-toolbar {
             color: var(--dark-theme-text-color);
             background-color: var(--primary-color);
@@ -64,6 +60,20 @@
 
         paper-menu a.iron-selected paper-item {
           @apply(--paper-menu-selected-item);
+        }
+
+        paper-button[raised][primary] {
+          color: var(--dark-theme-text-color);
+          background-color: var(--primary-color);
+        }
+
+        paper-button[error] {
+          color: var(--error-color);
+        }
+
+        paper-button[raised][error] {
+          color: var(--dark-theme-text-color);
+          background-color: var(--error-color);
         }
     </style>
 </dom-module>

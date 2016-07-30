@@ -6,13 +6,12 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 
-<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="elements/login-dialog.html">
+
+<link rel="import" href="../bower_components/app-layout/app-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
@@ -20,6 +19,8 @@
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
@@ -46,6 +47,10 @@
                 outline: none;
             }
 
+            app-toolbar [main-title] {
+                @apply(--layout-flex);
+            }
+
             paper-tab {
                 margin: 0 10px;
             }
@@ -65,19 +70,17 @@
 
         <iron-media-query query="min-width: 641px" query-matches="{{showTabs}}"></iron-media-query>
 
-        <firebase-app auth-domain="dpm-construction.firebaseapp.com"
-            database-url="https://dpm-construction.firebaseio.com"
-            api-key="AIzaSyBub_zhHGeThLY1FK5hPVaXITUpsesHOn4"
-            storage-bucket="dpm-construction.appspot.com">
-        </firebase-app>
+        <firebase-app auth-domain="dpm-construction.firebaseapp.com" api-key="AIzaSyBub_zhHGeThLY1FK5hPVaXITUpsesHOn4" database-url="https://dpm-construction.firebaseio.com" storage-bucket="dpm-construction.appspot.com"></firebase-app>
+        <login-dialog id="loginDialog">
+            <firebase-auth id="auth" online="{{online}}" user="{{user}}" provider="email"></firebase-auth>
+        </login-dialog>
 
         <app-drawer-layout fullbleed>
 
             <!-- Drawer content -->
             <app-drawer id="appMenuDrawer" hidden$="[[showTabs]]">
                 <app-toolbar>
-                    Menu
-                    <span class="flex-fill"></span>
+                    <div main-title>Menu</div>
                     <paper-icon-button icon="close" on-tap="_closeDrawer"></paper-icon-button>
                 </app-toolbar>
 
@@ -94,12 +97,33 @@
             <!-- Main content -->
             <app-header-layout has-scrolling-region>
 
+                <!-- Application Header -->
                 <app-header fixed effects="waterfall">
                     <app-toolbar>
                         <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
                         <div main-title>
                             <a href="/">DPM Construction</a>
                         </div>
+                        <!-- Online/Offline Icon -->
+                        <template is="dom-if" if="{{online}}">
+                            <div>
+                                <paper-icon-button icon="cloud"></paper-icon-button>
+                                <paper-tooltip>Online</paper-tooltip>
+                            </div>
+                        </template>
+                        <template is="dom-if" if="{{!online}}">
+                            <div>
+                                <paper-icon-button icon="cloud-off"></paper-icon-button>
+                                <paper-tooltip>Offline</paper-tooltip>
+                            </div>
+                        </template>
+                        <!-- Sign In/Out Button -->
+                        <template is="dom-if" if="{{!user}}">
+                            <paper-button on-tap="_login">Login</paper-button>
+                        </template>
+                        <template is="dom-if" if="{{user}}">
+                            <paper-button on-tap="_logout">Logout</paper-button>
+                        </template>
                     </app-toolbar>
 
                     <!-- Tab Navigation -->
@@ -179,6 +203,12 @@
                 if (appMenuDrawer) {
                     appMenuDrawer.close();
                 }
+            },
+            _login: function() {
+              this.$.loginDialog.open();
+            },
+            _logout: function() {
+                this.$.auth.signOut();
             }
         });
     </script>
