@@ -15,9 +15,9 @@
     <style>
         body {
             margin: 0;
-            font-family: 'Roboto', 'Noto', sans-serif;
+            /*font-family: 'Roboto', 'Noto', sans-serif;
             line-height: 1.5;
-            min-height: 100vh;
+            min-height: 100vh;*/
         }
     </style>
 </head>
@@ -60,13 +60,13 @@
 
             .centered {
                 position: fixed;
-                top: 50%;
-                left: 50%;
-                -webkit-transform: translate(-50%, -50%);
+                top: calc(50% - 32px);
+                left: calc(50% - 32px);
+                /*-webkit-transform: translate(-50%, -50%);
                 -moz-transform: translate(-50%, -50%);
                 -o-transform: translate(-50%, -50%);
                 -ms-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);*/
             }
 
             .spinner {
@@ -173,7 +173,7 @@
                 }
             }
         </style>
-        <svg class="spinner centered" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <svg class="spinner centered" width="64px" height="64px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
             <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
         </svg>
     </dpm-construction-app>

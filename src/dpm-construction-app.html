@@ -32,6 +32,10 @@
 
     <template>
         <style include="dpm-theme">
+            :host {
+                --paper-tabs-selection-bar-color: var(--accent-color);
+            }
+
             app-toolbar {
                 color: var(--dark-theme-text-color);
                 background-color: var(--dark-primary-color);
@@ -51,8 +55,17 @@
                 @apply(--layout-flex);
             }
 
+            #appTabNavigation {
+                height: 48px;
+                background-color: var(--paper-indigo-600);
+            }
+
+            paper-tabs {
+                margin: 0 auto;
+            }
+
             paper-tab {
-                margin: 0 10px;
+                margin: 0 20px;
             }
 
             .link {
@@ -128,8 +141,8 @@
 
                     <!-- Tab Navigation -->
                     <template is="dom-if" if="{{showTabs}}">
-                        <app-toolbar>
-                            <paper-tabs role="navigation" selected="[[page]]" attr-for-selected="name">
+                        <app-toolbar id="appTabNavigation">
+                            <paper-tabs role="navigation" selected="[[page]]" attr-for-selected="name" align-bottom>
                                 <template is="dom-repeat" items="[[_navItems]]">
                                     <paper-tab name="[[item.name]]" link>
                                         <a href="/[[item.name]]" class="link" tabindex="-1">[[item.display]]</a>
@@ -205,7 +218,7 @@
                 }
             },
             _login: function() {
-              this.$.loginDialog.open();
+                this.$.loginDialog.open();
             },
             _logout: function() {
                 this.$.auth.signOut();
