@@ -2,7 +2,9 @@
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
@@ -15,20 +17,21 @@
         </style>
 
         <content>
-          <!-- Must contain <firebase-auth provider="email"> tag -->
+            <!-- Must contain <firebase-auth provider="email"> tag -->
         </content>
 
         <paper-dialog>
             <h2>Login</h2>
-            <paper-dialog-scrollable>
+            <div>
+                <iron-a11y-keys id="a11y" keys="enter" on-keys-pressed="_submitForm"></iron-a11y-keys>
                 <form is="iron-form" id="form" on-iron-form-submit="submit">
-                    <paper-input type="text" name="email" label="Email" value="{{email}}" required autofocus></paper-input>
-                    <paper-input type="password" name="password" label="Password" value="{{password}}" required></paper-input>
+                    <gold-email-input name="email" label="Email" value="{{email}}" error-message="enter valid email" auto-validate required autofocus></gold-email-input>
+                    <paper-input type="password" name="password" label="Password" value="{{password}}" error-message="required" auto-validate required></paper-input>
                 </form>
-            </paper-dialog-scrollable>
+            </div>
             <div class="buttons">
                 <paper-button error dialog-dismiss>Cancel</paper-button>
-                <paper-button raised primary dialog-confirm on-tap="submit">Login</paper-button>
+                <paper-button raised primary on-tap="_submitForm">Login</paper-button>
             </div>
         </paper-dialog>
     </template>
@@ -44,22 +47,31 @@
                     type: String
                 }
             },
+            ready: function() {
+                this.$.a11y.target = this.$.form;
+            },
             open: function() {
-                this.reset();
+                this.$.form.reset();
                 this.$$('paper-dialog').open();
             },
             reset: function() {
-                this.email = undefined;
-                this.password = undefined;
+                //this.email = undefined;
+                //this.password = undefined;
             },
             submit: function() {
                 this.getContentChildren()[0].signInWithEmailAndPassword(this.email, this.password)
                     .then(function(response) {
                         console.log(response);
-                    })
+                        this.$$('paper-dialog').close();
+                    }.bind(this))
                     .catch(function(error) {
                         console.error(error);
                     });
+            },
+            _submitForm: function() {
+                if (this.$.form.validate()) {
+                    this.submit();
+                }
             }
         });
     </script>
