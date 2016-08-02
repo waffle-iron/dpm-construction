@@ -198,6 +198,14 @@
                 window.performance && performance.mark && performance.mark('dpm-construction-app.created');
                 this.removeAttribute('unresolved');
             },
+            ready: function() {
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    if ('serviceWorker' in navigator) {
+                        console.log("Registering Service Worker");
+                        navigator.serviceWorker.register('/service-worker.js');
+                    }
+                });
+            },
             _routePageChanged: function(page) {
                 this.page = page || 'home';
                 Polymer.AppLayout.scroll({
@@ -205,7 +213,7 @@
                     behavior: 'silent'
                 });
             },
-            _pageChanged: function(page) {
+            _pageChanged: function(page, oldPage) {
                 if (page === 'home') {
                     return;
                 }
