@@ -9,15 +9,22 @@
             --secondary-text-color: var(--light-theme-secondary-color);
             --disabled-text-color: var(--light-theme-disabled-color);
             --divider-color: var(--light-theme-divider-color);
-            --error-color: var(--paper-deep-orange-a700);
             /* Primary */
             --primary-color: var(--paper-blue-grey-500);
             --light-primary-color: var(--paper-blue-grey-100);
             --dark-primary-color: var(--paper-blue-grey-700);
-            /* Accent */
+            /* Accent/Info */
             --accent-color: var(--paper-blue-a200);
             --light-accent-color: var(--paper-blue-a100);
             --dark-accent-color: var(--paper-blue-a400);
+            /* Success */
+            --success-color: var(--paper-green-500);
+            --light-success-color: var(--paper-green-100);
+            --dark-success-color: var(--paper-green-700);
+            /* Error */
+            --error-color: var(--paper-red-500);
+            --light-error-color: var(--paper-red-100);
+            --dark-error-color: var(--paper-red-700);
             /* Deprecated */
             --text-primary-color: var(--dark-theme-text-color);
             --default-primary-color: var(--primary-color);
@@ -74,6 +81,16 @@
         paper-button[raised][error] {
           color: var(--dark-theme-text-color);
           background-color: var(--error-color);
+        }
+
+        paper-toast[success] {
+          color: var(--dark-success-color);
+          background-color: var(--light-success-color);
+        }
+
+        paper-toast[error] {
+          color: var(--dark-error-color);
+          background-color: var(--light-error-color);
         }
     </style>
 </dom-module>

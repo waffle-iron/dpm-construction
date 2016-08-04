@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 
 <dom-module id="login-dialog">
     <template>
@@ -20,10 +21,10 @@
             <!-- Must contain <firebase-auth provider="email"> tag -->
         </content>
 
-        <paper-dialog>
+        <paper-dialog id="dialog">
             <h2>Login</h2>
             <div>
-                <iron-a11y-keys id="a11y" keys="enter" on-keys-pressed="_submitForm"></iron-a11y-keys>
+                <iron-a11y-keys id="a11yEnter" keys="enter" on-keys-pressed="_submitForm"></iron-a11y-keys>
                 <form is="iron-form" id="form" on-iron-form-submit="submit">
                     <gold-email-input name="email" label="Email" value="{{email}}" error-message="enter valid email" auto-validate required autofocus></gold-email-input>
                     <paper-input type="password" name="password" label="Password" value="{{password}}" error-message="required" auto-validate required></paper-input>
@@ -34,6 +35,9 @@
                 <paper-button raised primary on-tap="_submitForm">Login</paper-button>
             </div>
         </paper-dialog>
+        
+        <paper-toast id="successToast" success></paper-toast>
+        <paper-toast id="errorToast" error></paper-toast>
     </template>
 
     <script>
@@ -48,21 +52,31 @@
                 }
             },
             ready: function() {
-                this.$.a11y.target = this.$.form;
+                var firebaseAuth = this.queryEffectiveChildren('firebase-auth');
+                if (!firebaseAuth) {
+                    console.error('<firebase-auth> tag must be nested in this <login-dialog>');
+                }
+                this.$.a11yEnter.target = this.$.form;
             },
             open: function() {
                 this.$.form.reset();
-                this.$$('paper-dialog').open();
+                this.$.dialog.open();
             },
             submit: function() {
-                this.getContentChildren()[0].signInWithEmailAndPassword(this.email, this.password)
+                var firebaseAuth = this.queryEffectiveChildren('firebase-auth');
+                if(firebaseAuth.provider !== 'email') {
+                  console.error("<firebase-auth> provider must be 'email' not '" + firebaseAuth.provider + "'");
+                  return;
+                }
+                firebaseAuth.signInWithEmailAndPassword(this.email, this.password)
                     .then(function(response) {
                         console.log("Logged in as '" + this.email + "'");
-                        this.$$('paper-dialog').close();
+                        this.$.dialog.close();
+                        this.$.successToast.show("Logged in as '" + this.email + "'");
                     }.bind(this))
                     .catch(function(error) {
-                        console.error(error);
-                    });
+                        this.$.errorToast.show("Invaild login credentials");
+                    }.bind(this));
             },
             _submitForm: function() {
                 if (this.$.form.validate()) {
