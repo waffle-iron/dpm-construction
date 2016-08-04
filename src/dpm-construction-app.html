@@ -132,7 +132,7 @@
                         </template>
                         <!-- Sign In/Out Button -->
                         <template is="dom-if" if="{{!user}}">
-                            <paper-button on-tap="_login">Login</paper-button>
+                            <paper-button on-tap="_displayLoginDialog">Login</paper-button>
                         </template>
                         <template is="dom-if" if="{{user}}">
                             <paper-button on-tap="_logout">Logout</paper-button>
@@ -225,10 +225,11 @@
                     appMenuDrawer.close();
                 }
             },
-            _login: function() {
+            _displayLoginDialog: function() {
                 this.$.loginDialog.open();
             },
             _logout: function() {
+                console.log("Logging out '" + this.user.email + "'");
                 this.$.auth.signOut();
             }
         });

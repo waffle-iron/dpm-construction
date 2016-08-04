@@ -54,14 +54,10 @@
                 this.$.form.reset();
                 this.$$('paper-dialog').open();
             },
-            reset: function() {
-                //this.email = undefined;
-                //this.password = undefined;
-            },
             submit: function() {
                 this.getContentChildren()[0].signInWithEmailAndPassword(this.email, this.password)
                     .then(function(response) {
-                        console.log(response);
+                        console.log("Logged in as '" + this.email + "'");
                         this.$$('paper-dialog').close();
                     }.bind(this))
                     .catch(function(error) {
