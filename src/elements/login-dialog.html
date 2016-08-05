@@ -35,7 +35,7 @@
                 <paper-button raised primary on-tap="_submitForm">Login</paper-button>
             </div>
         </paper-dialog>
-        
+
         <paper-toast id="successToast" success></paper-toast>
         <paper-toast id="errorToast" error></paper-toast>
     </template>
@@ -65,7 +65,7 @@
             submit: function() {
                 var firebaseAuth = this.queryEffectiveChildren('firebase-auth');
                 if(firebaseAuth.provider !== 'email') {
-                  console.error("<firebase-auth> provider must be 'email' not '" + firebaseAuth.provider + "'");
+                  console.error("<firebase-auth> provider attribute must be 'email'");
                   return;
                 }
                 firebaseAuth.signInWithEmailAndPassword(this.email, this.password)
