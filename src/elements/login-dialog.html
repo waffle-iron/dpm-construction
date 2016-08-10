@@ -31,26 +31,18 @@
                 </form>
             </div>
             <div class="buttons">
-                <paper-button error dialog-dismiss>Cancel</paper-button>
+                <paper-button danger dialog-dismiss>Cancel</paper-button>
                 <paper-button raised primary on-tap="_submitForm">Login</paper-button>
             </div>
         </paper-dialog>
 
         <paper-toast id="successToast" success></paper-toast>
-        <paper-toast id="errorToast" error></paper-toast>
+        <paper-toast id="dangerToast" danger></paper-toast>
     </template>
 
     <script>
         Polymer({
             is: 'login-dialog',
-            properties: {
-                email: {
-                    type: String
-                },
-                password: {
-                    type: String
-                }
-            },
             ready: function() {
                 var firebaseAuth = this.queryEffectiveChildren('firebase-auth');
                 if (!firebaseAuth) {
@@ -71,11 +63,11 @@
                 firebaseAuth.signInWithEmailAndPassword(this.email, this.password)
                     .then(function(response) {
                         console.log("Logged in as '" + this.email + "'");
-                        this.$.dialog.close();
                         this.$.successToast.show("Logged in as '" + this.email + "'");
+                        this.$.dialog.close();
                     }.bind(this))
                     .catch(function(error) {
-                        this.$.errorToast.show("Invaild login credentials");
+                        this.$.dangerToast.show("Invaild login credentials");
                     }.bind(this));
             },
             _submitForm: function() {

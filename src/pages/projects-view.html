@@ -9,7 +9,12 @@
     <template>
         <style>
             :host {
+                display: block;
                 text-align: center;
+            }
+
+            .project-cards {
+              text-align: center;
             }
 
             paper-fab {
@@ -23,19 +28,21 @@
 
         <firebase-query id="query" path="/projects" data="{{projects}}"></firebase-query>
 
-        <template is="dom-repeat" items="[[projects]]" as="project">
-            <project-card project="[[project]]"></project-card>
-        </template>
+        <section class="project-cards">
+            <template is="dom-repeat" items="[[projects]]" as="project">
+                <project-card project="[[project]]"></project-card>
+            </template>
+        </section>
 
-        <paper-fab icon="add" on-tap="_displayProjectDialog">Add Project</paper-fab>
-        <project-form-dialog id="projectDialog"></project-form-dialog>
+        <paper-fab icon="add" on-tap="_displayProjectFormDialog">Add Project</paper-fab>
+        <project-form-dialog id="projectFormDialog"></project-form-dialog>
     </template>
 
     <script>
         Polymer({
             is: 'projects-view',
-            _displayProjectDialog: function() {
-                this.$.projectDialog.open();
+            _displayProjectFormDialog: function() {
+                this.$.projectFormDialog.open();
             }
         });
     </script>

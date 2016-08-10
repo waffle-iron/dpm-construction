@@ -22,19 +22,19 @@
         <paper-dialog id="dialog">
             <h2>Project</h2>
             <div>
-                <iron-a11y-keys id="a11yEnter" keys="enter" on-keys-pressed="save"></iron-a11y-keys>
+                <iron-a11y-keys id="a11yEnter" keys="enter" on-keys-pressed="_save"></iron-a11y-keys>
                 <form is="iron-form" id="form">
                     <paper-input type="text" name="name" label="Name" value="{{project.name}}" error-message="required" auto-validate required autofocus></paper-input>
                 </form>
             </div>
             <div class="buttons">
-                <paper-button error dialog-dismiss>Cancel</paper-button>
-                <paper-button raised primary on-tap="save">Save</paper-button>
+                <paper-button danger dialog-dismiss>Cancel</paper-button>
+                <paper-button raised primary on-tap="_save">Save</paper-button>
             </div>
         </paper-dialog>
 
         <paper-toast id="successToast" success></paper-toast>
-        <paper-toast id="errorToast" error></paper-toast>
+        <paper-toast id="dangerToast" danger></paper-toast>
     </template>
 
     <script>
@@ -53,13 +53,14 @@
               this.$.document.reset();
               this.$.dialog.open();
             },
-            save: function() {
+            _save: function() {
               this.$.document.save('/projects')
                   .then(function(response) {
                       this.$.dialog.close();
+                      this.$.successToast.show("Saved Project: ''" + this.project.name + "'");
                   }.bind(this))
                   .catch(function(error) {
-                      this.$.errorToast.show("Unable to save Project");
+                      this.$.dangerToast.show("Unable to save Project: " + error.code);
                   }.bind(this));
             }
         });
