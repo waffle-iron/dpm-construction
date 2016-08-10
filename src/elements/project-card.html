@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="project-card">
+    <template>
+        <style>
+          :host {
+            text-align: center;
+          }
+        </style>
+
+        <firebase-document id="document" path="/projects/[[project.$key]]"></firebase-document>
+
+        <paper-card heading="[[project.name]]">
+          <div class="card-actions">
+            <paper-icon-button icon="delete" on-tap="delete"></paper-icon-button>
+          </div>
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'project-card',
+            properties: {
+              project: {
+                type: Object
+              }
+            },
+            delete: function() {
+              this.$.document.destroy();
+            }
+        });
+    </script>
+</dom-module>

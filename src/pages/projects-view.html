@@ -1,19 +1,42 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+
+<link rel="import" href="../elements/project-form-dialog.html">
+<link rel="import" href="../elements/project-card.html">
 
 <dom-module id="projects-view">
     <template>
         <style>
-          :host {
-            text-align: center;
-          }
+            :host {
+                text-align: center;
+            }
+
+            paper-fab {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+            }
         </style>
 
         <h1>Projects</h1>
+
+        <firebase-query id="query" path="/projects" data="{{projects}}"></firebase-query>
+
+        <template is="dom-repeat" items="[[projects]]" as="project">
+            <project-card project="[[project]]"></project-card>
+        </template>
+
+        <paper-fab icon="add" on-tap="_displayProjectDialog">Add Project</paper-fab>
+        <project-form-dialog id="projectDialog"></project-form-dialog>
     </template>
 
     <script>
         Polymer({
-            is: 'projects-view'
+            is: 'projects-view',
+            _displayProjectDialog: function() {
+                this.$.projectDialog.open();
+            }
         });
     </script>
 </dom-module>
