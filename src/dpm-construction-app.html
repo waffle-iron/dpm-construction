@@ -7,6 +7,7 @@
 
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../bower_components/iron-meta/iron-meta.html">
 
 <link rel="import" href="elements/login-dialog.html">
 
@@ -91,6 +92,7 @@
         <login-dialog id="loginDialog">
             <firebase-auth id="auth" online="{{online}}" user="{{user}}" provider="email"></firebase-auth>
         </login-dialog>
+        <iron-meta key="user" value="{{user}}"></iron-meta>
 
         <app-drawer-layout fullbleed>
 
