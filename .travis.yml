@@ -13,7 +13,7 @@ node_js:
   - '5'
   - '4'
 before_install:
-  - sudo apt-get -y install openjdk-8-jdk
+  - sudo apt-get install default-jre -y
 before_script:
   - npm install -g bower polymer-cli firebase-tools
   - bower install
