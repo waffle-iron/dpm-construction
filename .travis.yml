@@ -8,6 +8,7 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
+      - openjdk-8-jdk
 node_js:
   - '6'
   - '5'
