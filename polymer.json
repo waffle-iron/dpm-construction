@@ -1,14 +1,17 @@
 {
-    "entrypoint": "index.html",
-    "shell": "src/dpm-construction-app.html",
-    "fragments": [
-        "manifest.json",
-        "src/dpm-theme.html",
-        "src/pages/home-view.html",
-        "src/pages/not-found-view.html",
-        "src/pages/projects-view.html",
-        "src/pages/services-view.html",
-        "src/pages/contact-us-view.html",
-        "sw-precache-config.js"
-    ]
+  "entrypoint": "index.html",
+  "shell": "src/dpm-construction-app.html",
+  "fragments": [
+    "src/pages/home-view.html",
+    "src/pages/my-view404.html"
+  ],
+  "sourceGlobs": [
+   "src/**/*",
+   "images/**/*",
+   "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
 }

@@ -1,243 +1,137 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/app-layout/helpers/helpers.html">
-<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-
-<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
-<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
-<link rel="import" href="../bower_components/iron-meta/iron-meta.html">
-
-<link rel="import" href="elements/login-dialog.html">
-
-<link rel="import" href="../bower_components/app-layout/app-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-
-<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-
-<link rel="import" href="pages/home-view.html">
-<link rel="import" href="pages/not-found-view.html">
-<link rel="import" href="dpm-theme.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="my-icons.html">
 
 <dom-module id="dpm-construction-app">
+  <template>
+    <style>
+      :host {
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+        display: block;
+      }
 
-    <template>
-        <style include="dpm-theme">
-            :host {
-                --paper-tabs-selection-bar-color: var(--accent-color);
-            }
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
 
-            app-header-layout {
-                background-color: #f1f1f1;
-            }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
 
-            app-toolbar {
-                color: var(--dark-theme-text-color);
-                background-color: var(--dark-primary-color);
-            }
+      app-toolbar a {
+        color: #fff;
+        text-decoration: none;
+      }
 
-            app-toolbar a,
-            app-toolbar a:hover,
-            app-toolbar a:active,
-            app-toolbar a:visited,
-            app-toolbar a:focus {
-                color: var(--dark-theme-text-color);
-                text-decoration: none;
-                outline: none;
-            }
+      .drawer-list {
+        margin: 0 20px;
+      }
 
-            app-toolbar [main-title] {
-                @apply(--layout-flex);
-            }
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
 
-            #appTabNavigation {
-                height: 48px;
-                background-color: var(--paper-blue-grey-600);
-            }
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+    </style>
 
-            paper-tabs {
-                margin: 0 auto;
-            }
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}">
+      </app-route>
 
-            paper-tab {
-                margin: 0 20px;
-            }
+    <app-drawer-layout fullbleed>
+      <!-- Drawer Content -->
+      <app-drawer id="appDrawer">
+        <app-toolbar></app-toolbar>
+        <iron-selector
+            selected="[[page]]"
+            attr-for-selected="name"
+            role="navigation"
+            on-tap="_closeDrawer">
+          <a name="home" href="/">Home</a>
+        </iron-selector>
+      </app-drawer>
 
-            .link {
-                @apply(--layout-horizontal);
-                @apply(--layout-center-center);
-            }
+      <!-- Main Content -->
+      <app-header-layout has-scrolling-region>
 
-            main {
-                padding: 0px 20px;
-            }
-        </style>
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+              <div main-title>
+                <a href="/">DPM Construction</a>
+              </div>
+          </app-toolbar>
+        </app-header>
 
-        <app-location route="{{route}}"></app-location>
-        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="not-found"
+            role="main">
+          <home-view name="home"></home-view>
+          <not-found-view name="not-found"></not-found-view>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
 
-        <iron-media-query query="min-width: 641px" query-matches="{{showTabs}}"></iron-media-query>
+  <script>
+    Polymer({
+      is: 'dpm-construction-app',
 
-        <firebase-app auth-domain="dpm-construction.firebaseapp.com" api-key="AIzaSyBub_zhHGeThLY1FK5hPVaXITUpsesHOn4" database-url="https://dpm-construction.firebaseio.com" storage-bucket="dpm-construction.appspot.com"></firebase-app>
-        <login-dialog id="loginDialog">
-            <firebase-auth id="auth" online="{{online}}" user="{{user}}" provider="email"></firebase-auth>
-        </login-dialog>
-        <iron-meta key="user" value="{{user}}"></iron-meta>
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        }
+      },
 
-        <app-drawer-layout fullbleed>
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
 
-            <!-- Drawer content -->
-            <app-drawer id="appMenuDrawer" hidden$="[[showTabs]]">
-                <app-toolbar>
-                    <div main-title>Menu</div>
-                    <paper-icon-button icon="close" on-tap="_closeDrawer"></paper-icon-button>
-                </app-toolbar>
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+      },
 
-                <!-- Menu Navigation -->
-                <paper-menu role="navigation" selected="[[page]]" attr-for-selected="name" on-tap="_closeDrawer">
-                    <template is="dom-repeat" items="[[_navItems]]">
-                        <a name="[[item.name]]" href="/[[item.name]]">
-                            <paper-item>[[item.display]]</paper-item>
-                        </a>
-                    </template>
-                </paper-menu>
-            </app-drawer>
+      _pageChanged: function(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('pages/' + page + '-view.html');
+        this.importHref(resolvedPageUrl, this._closeDrawer, this._showPage404, true);
+      },
 
-            <!-- Main content -->
-            <app-header-layout has-scrolling-region>
+      _closeDrawer: function() {
+        console.log("Close Drawer");
+        this.$.appDrawer.close();
+      },
 
-                <!-- Application Header -->
-                <app-header fixed effects="waterfall">
-                    <app-toolbar>
-                        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-                        <div main-title>
-                            <a href="/">DPM Construction</a>
-                        </div>
-                        <!-- Online/Offline Icon -->
-                        <template is="dom-if" if="{{online}}">
-                            <div>
-                                <paper-icon-button icon="cloud"></paper-icon-button>
-                                <paper-tooltip>Online</paper-tooltip>
-                            </div>
-                        </template>
-                        <template is="dom-if" if="{{!online}}">
-                            <div>
-                                <paper-icon-button icon="cloud-off"></paper-icon-button>
-                                <paper-tooltip>Offline</paper-tooltip>
-                            </div>
-                        </template>
-                        <!-- Sign In/Out Button -->
-                        <template is="dom-if" if="{{!user}}">
-                            <paper-button on-tap="_displayLoginDialog">Login</paper-button>
-                        </template>
-                        <template is="dom-if" if="{{user}}">
-                            <paper-button on-tap="_logout">Logout</paper-button>
-                        </template>
-                    </app-toolbar>
-
-                    <!-- Tab Navigation -->
-                    <template is="dom-if" if="{{showTabs}}">
-                        <app-toolbar id="appTabNavigation">
-                            <paper-tabs role="navigation" selected="[[page]]" attr-for-selected="name" align-bottom>
-                                <template is="dom-repeat" items="[[_navItems]]">
-                                    <paper-tab name="[[item.name]]" link>
-                                        <a href="/[[item.name]]" class="link" tabindex="-1">[[item.display]]</a>
-                                    </paper-tab>
-                                </template>
-                            </paper-tabs>
-                        </app-toolbar>
-                    </template>
-                </app-header>
-
-                <main role="main">
-                    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="404">
-                        <home-view name="home"></home-view>
-                        <not-found-view name="404"></not-found-view>
-                        <projects-view name="projects"></projects-view>
-                        <services-view name="services"></services-view>
-                        <contact-us-view name="contact-us"></contact-us-view>
-                    </iron-pages>
-                </main>
-            </app-header-layout>
-        </app-drawer-layout>
-    </template>
-
-    <script>
-        Polymer({
-            is: 'dpm-construction-app',
-            properties: {
-                page: {
-                    type: String,
-                    reflectToAttribute: true,
-                    observer: '_pageChanged'
-                },
-                _navItems: {
-                    type: Array,
-                    value: function() {
-                        return [{
-                            name: 'projects',
-                            display: 'Projects'
-                        }, {
-                            name: 'services',
-                            display: 'Services'
-                        }, {
-                            name: 'contact-us',
-                            display: 'Contact Us'
-                        }]
-                    }
-                }
-            },
-            observers: [
-                '_routePageChanged(routeData.page)'
-            ],
-            created: function() {
-                window.performance && performance.mark && performance.mark('dpm-construction-app.created');
-                this.removeAttribute('unresolved');
-            },
-            ready: function() {
-                Polymer.RenderStatus.afterNextRender(this, function() {
-                    if ('serviceWorker' in navigator) {
-                        console.log("Registering Service Worker");
-                        navigator.serviceWorker.register('/service-worker.js');
-                    }
-                });
-            },
-            _routePageChanged: function(page) {
-                this.page = page || 'home';
-                Polymer.AppLayout.scroll({
-                    top: 0,
-                    behavior: 'silent'
-                });
-            },
-            _pageChanged: function(page, oldPage) {
-                if (page === 'home') {
-                    return;
-                }
-                this.importHref(this.resolveUrl('pages/' + page + '-view.html'), null, null, true);
-            },
-            _closeDrawer: function() {
-                var appMenuDrawer = this.$.appMenuDrawer;
-                if (appMenuDrawer) {
-                    appMenuDrawer.close();
-                }
-            },
-            _displayLoginDialog: function() {
-                this.$.loginDialog.open();
-            },
-            _logout: function() {
-                console.log("Logging out '" + this.user.email + "'");
-                this.$.auth.signOut();
-            }
-        });
-    </script>
+      _showPage404: function() {
+        this.page = 'not-found';
+      }
+    });
+  </script>
 </dom-module>
