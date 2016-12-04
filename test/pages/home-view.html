@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>my-view1</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../../src/pages/home-view.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <home-view>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('home view tests', function() {
+        var home;
+
+        setup(function() {
+          home = fixture('basic');
+        });
+
+        test('Home Title', function() {
+          var h1 = Polymer.dom(home.root).querySelector('h1');
+          assert.equal(h1.textContent, 'Home');
+        })
+      });
+    </script>
+  </body>
+</html>

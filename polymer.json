@@ -3,7 +3,7 @@
   "shell": "src/dpm-construction-app.html",
   "fragments": [
     "src/pages/home-view.html",
-    "src/pages/my-view404.html"
+    "src/pages/not-found-view.html"
   ],
   "sourceGlobs": [
    "src/**/*",
