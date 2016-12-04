@@ -10,7 +10,6 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="my-icons.html">
 
 <dom-module id="dpm-construction-app">
   <template>
@@ -33,23 +32,6 @@
       app-toolbar a {
         color: #fff;
         text-decoration: none;
-      }
-
-      .drawer-list {
-        margin: 0 20px;
-      }
-
-      .drawer-list a {
-        display: block;
-        padding: 0 16px;
-        text-decoration: none;
-        color: var(--app-secondary-color);
-        line-height: 40px;
-      }
-
-      .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
       }
     </style>
 
@@ -125,7 +107,6 @@
       },
 
       _closeDrawer: function() {
-        console.log("Close Drawer");
         this.$.appDrawer.close();
       },
 

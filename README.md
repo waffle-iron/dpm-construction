@@ -1,4 +1,4 @@
-# Polymer App Toolbox - Starter Kit
+# DPM Construction
 
 [![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
 
