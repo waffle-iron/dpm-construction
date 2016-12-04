@@ -1,21 +1,22 @@
-sudo: required
-dist: trusty
-addons:
-  firefox: '46.0'
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
 language: node_js
 node_js:
   - '6'
   - '5'
   - '4'
-before_install:
-  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+dist: trusty
+sudo: required
+addons:
+  firefox: latest
+  sauce_connect: true
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
 before_script:
   - npm install -g bower polymer-cli firebase-tools
   - bower install
+  - polymer lint
 script:
-  - xvfb-run polymer test
+  - xvfb-run polymer test --skip-plugin sauce
+  - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test -s 'default' --skip-plugin local; fi
