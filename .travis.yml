@@ -15,7 +15,7 @@ before_script:
 script:
   - polymer test --plugin sauce --skip-plugin local
 after_success: >
-  if [ "${TRAVIS_BRANCH}" = "master" ];
+  if [ "${TRAVIS_BRANCH}" = "master" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ];
     then npm install -g firebase-tools && polymer build && firebase deploy --token "$FIREBASE_TOKEN" --non-interactive;
     else echo Skipping Deploy;
   fi
