@@ -1,8 +1,8 @@
 # DPM Construction
 
-[![Build Status](https://travis-ci.org/cluttered-code/dpm-construction.svg?branch=master)](https://travis-ci.org/cluttered-code/dpm-construction)
-
 [![Build Status](https://saucelabs.com/browser-matrix/cluttered-code.svg)](https://saucelabs.com/beta/builds/a8b4729490d441b8a9d1cd0feee4bb93)
+
+[![Build Status](https://travis-ci.org/cluttered-code/dpm-construction.svg?branch=master)](https://travis-ci.org/cluttered-code/dpm-construction)
 
 ### Setup
 
